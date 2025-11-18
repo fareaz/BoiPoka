@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLoaderData } from "react-router";
+import { getStoredBook } from "../../Utility/addToStoredDB";
 
 const Listed = () => {
   const allBooks = useLoaderData() || [];
-  const [readIds, setReadIds] = useState([]);
 
-  useEffect(() => {
-    try {
-      const data = localStorage.getItem("readList");
-      if (data) {
-        const parsed = JSON.parse(data);
-        if (Array.isArray(parsed)) {
-          setReadIds(parsed);
-        } else {
-          setReadIds([]);
-        }
-      } else {
-        setReadIds([]);
-      }
-    } catch (err) {
-      console.error("Error parsing readList from localStorage:", err);
-      setReadIds([]);
-    }
-  }, []);
+  const readIds = getStoredBook(); 
 
-  const storedBooks = Array.isArray(allBooks)
-    ? allBooks.filter((book) => readIds.includes(book.bookId?.toString()))
-    : [];
+  const storedBooks = allBooks.filter((book) =>
+    readIds.includes(book.bookId)
+  );
 
   return (
     <div className="min-h-screen bg-base-200 py-10">
-      <h1 className="text-4xl font-bold text-center mb-8">
-        Books I&apos;ve Read
-      </h1>
+      <h1 className="text-4xl font-bold text-center mb-8">Books I've Read</h1>
 
       {storedBooks.length === 0 ? (
-        <h2 className="text-2xl font-semibold text-center text-gray-500">
+        <h2 className="text-2xl text-center text-gray-500">
           No books read yet.
         </h2>
       ) : (
@@ -43,23 +24,13 @@ const Listed = () => {
           {storedBooks.map((book) => (
             <div
               key={book.bookId}
-              className="card bg-base-100 shadow-md hover:shadow-xl border border-base-200 transition-transform hover:-translate-y-1"
+              className="card bg-base-100 border shadow-md hover:shadow-xl"
             >
               <div className="card-body">
-                <div className="flex justify-between items-start gap-2">
-                  <h2 className="card-title text-lg line-clamp-2">
-                    {book.bookName}
-                  </h2>
-                  <span className="badge badge-accent text-xs">
-                    ⭐ {book.rating}
-                  </span>
-                </div>
-
-                <p className="text-sm text-gray-500 mt-1">
-                  by <span className="font-medium">{book.author}</span>
-                </p>
-
-                <p className="text-sm mt-3 line-clamp-3">{book.review}</p>
+                <h2 className="card-title">{book.bookName}</h2>
+                <p className="text-sm text-gray-600">by {book.author}</p>
+                <p className="text-sm mt-2 line-clamp-3">{book.review}</p>
+                <p className="mt-1 font-semibold">⭐ {book.rating}</p>
               </div>
             </div>
           ))}

@@ -1,37 +1,55 @@
-import React from 'react';
-import { useLoaderData, useParams, useNavigate } from 'react-router'; // 
-import { addToStoredDB } from '../../Utility/addToStoredDB';
-import { addToWishList } from '../../Utility/addToWishList';
+import React from "react";
+import { useLoaderData, useParams, useNavigate } from "react-router";
+
+import { addToStoredDB } from "../../Utility/addToStoredDB";
+import { addToWishList } from "../../Utility/addToWishList";
 
 const BookDetails = () => {
   const { bookId } = useParams();
-  const navigate = useNavigate(); 
-  const allBooks = useLoaderData();
+  const navigate = useNavigate();
+  const allBooks = useLoaderData() || [];
 
-  const clickId = parseInt(bookId);
+  const clickId = Number(bookId); 
+
   const matchedBook = allBooks.find((book) => book.bookId === clickId);
 
-  const { 
-    bookName, author, review, totalPages, rating,
-    category, image, tags = [], publisher, yearOfPublishing 
-  } = matchedBook || {};
+  if (!matchedBook) {
+    return (
+      <div className="text-center mt-10 text-xl text-gray-500">
+        Book not found.
+      </div>
+    );
+  }
 
-  const handleMarkAsRead = (id) => {
-    alert("Book marked as read!");
-    addToStoredDB(id);
+  const {
+    bookName,
+    author,
+    review,
+    totalPages,
+    rating,
+    category,
+    image,
+    tags = [],
+    publisher,
+    yearOfPublishing,
+  } = matchedBook;
+
+  const handleMarkAsRead = () => {
+    addToStoredDB(clickId);
+    alert("Book marked as Read!");
   };
 
-  const handleMarkAsWishList = (id) => {
-    alert("Book added to wishlist!");
-    addToWishList(id);
+  const handleMarkAsWishList = () => {
+    addToWishList(clickId);
+    alert("Book added to Wishlist!");
   };
 
   return (
     <div className="max-w-7xl mx-auto card lg:card-side bg-gray-100 shadow-sm my-5">
-      
-   
-      <button 
-        onClick={() => navigate(-1)} 
+
+     
+      <button
+        onClick={() => navigate(-1)}
         className="btn btn-outline btn-sm ml-5 mt-5"
       >
         ← Back
@@ -43,21 +61,28 @@ const BookDetails = () => {
 
       <div className="card-body flex-1">
         <h2 className="text-3xl font-bold">{bookName}</h2>
-        <h2 className="text-2xl font-semibold"> By: {author}</h2>
+        <h2 className="text-2xl font-semibold">By: {author}</h2>
         <h3 className="text-lg">{category}</h3>
+
         <p className="text-xl">
-          <span className="font-bold">Review:</span> {review}
+          <span className="font-bold">Review: </span>
+          {review}
         </p>
 
+        {/* Tags */}
         <div className="card-actions">
           <h2>Tags:</h2>
           {tags.map((tag, index) => (
-            <div key={index} className="badge font-semibold bg-green-100 text-green-500">
-              {tag}
+            <div
+              key={index}
+              className="badge bg-green-100 text-green-500 font-semibold"
+            >
+              #{tag}
             </div>
           ))}
         </div>
 
+        {/* Details Section */}
         <div className="flex gap-20 text-lg my-5">
           <div>
             <p>Number of Pages:</p>
@@ -74,13 +99,16 @@ const BookDetails = () => {
           </div>
         </div>
 
+        {/* Buttons */}
         <div className="card-actions">
-          <button onClick={() => handleMarkAsRead(clickId)} className="btn btn-active">
-            Read
+          <button onClick={handleMarkAsRead} className="btn btn-active">
+            Mark as Read
           </button>
-
-          <button onClick={() => handleMarkAsWishList(clickId)} className="btn btn-accent text-white font-bold">
-            Wishlist
+          <button
+            onClick={handleMarkAsWishList}
+            className="btn btn-accent text-white"
+          >
+            Add to Wishlist
           </button>
         </div>
       </div>

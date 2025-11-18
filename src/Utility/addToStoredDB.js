@@ -1,32 +1,16 @@
-const getStoredBook = () => {
-    
-    const storedBookSTR = localStorage.getItem("readList");
+export const getStoredBook = () => {
+  const stored = localStorage.getItem("readList");
+  return stored ? JSON.parse(stored) : [];
+};
 
-    if (storedBookSTR) {
-        const storedBookData = JSON.parse(storedBookSTR);
-        return storedBookData;
-    }
-    else {
-        return [];
-    }
+export const addToStoredDB = (id) => {
+  const stored = getStoredBook(); 
 
-}
+  if (stored.includes(id)) {
+    alert("Already added to Read List!");
+    return;
+  }
 
-const addToStoredDB = (id) => {
-    
-    const storedBookData = getStoredBook();
-
-    if (storedBookData.includes(id)) {
-        console.log("hello")
-        alert(" ei id already exist ")
-    }
-    else {
-        storedBookData.push(id);
-        const data = JSON.stringify(storedBookData);
-        localStorage.setItem("readList",data)
-
-    }
-
-}
-
-export { addToStoredDB,getStoredBook };
+  stored.push(id);
+  localStorage.setItem("readList", JSON.stringify(stored));
+};
