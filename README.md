@@ -1,16 +1,52 @@
-# React + Vite
+# 📚 BoiPoka
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**BoiPoka** is a simple experimental book listing web application where users can browse books and manage two personal lists:
 
-Currently, two official plugins are available:
+- ✅ **Read List (Listed)**
+- ⭐ **Wishlist (Watchlist)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app is completely client-side and uses **localStorage** to save user selections.  
+It is built for practicing React fundamentals, routing, and basic persistent UI state.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+👉 **Live Link:** https://soft-muffin-ed10b8.netlify.app/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Features
+
+- 📖 Browse a collection of books
+- ➕ Add books to:
+  - **Read List (Listed)**
+  - **Wishlist (Watchlist)**
+- 🗂 Separate pages for:
+  - `Listed` — books you’ve marked as read
+  - `Wishlist` — books you want to read later
+- 🔧 Data is fully stored in **localStorage** (no server needed)
+- 🔙 Dedicated **Book Details** page with:
+  - Title, Author, Category, Pages, Rating, Publisher
+  - Tags
+  - Buttons to add to lists
+  - Back navigation
+
+---
+
+## 🛠 Tech Stack
+
+- ⚛️ **React**
+- 🌐 **React Router**
+- 🎨 **Tailwind CSS**
+- 🖼 **react-icons**
+- 💾 **localStorage** for data persistence
+
+---
+
+## 📦 Getting Started
+
+### 1️⃣ Clone the Repository
+
+git clone https://github.com/your-username/boipoka.git
+cd boipoka
